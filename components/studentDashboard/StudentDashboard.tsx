@@ -7,6 +7,12 @@ import { UpcomingAppointment, AvailableAppointment } from "@/types"
 export function StudentDashboard() {
     const [date, setDate] = useState<Date | undefined>()
 
+    const highlightDates = [
+        new Date(2024, 4, 15),
+        new Date(2024, 4, 18),
+        new Date(2024, 4, 14),
+    ]
+
     const availableAppointments: AvailableAppointment[] = [
         { id: 1, date: "April 15, 2023", time: "10:00 AM - 11:00 AM", coachName: "Tom Stein" },
         { id: 2, date: "April 16, 2023", time: "2:00 PM - 3:00 PM", coachName: "Brooklyn Sharon" },
@@ -27,6 +33,7 @@ export function StudentDashboard() {
                     selected={date}
                     onSelect={setDate}
                     className="rounded-md border"
+                    highlightDates={highlightDates}
                 />
             </div>
             <div className="md:col-span-1 h-full">
