@@ -21,7 +21,7 @@ export function UpcomingAppointments({ appointments }: UpcomingAppointmentsProps
                             <div className="text-gray-500 dark:text-gray-400">{appointment.time}</div>
                         </div>
                         <div className="px-2 py-1 rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-200 font-medium text-sm">
-                            {appointment.coachPhoneNumber}
+                            phone # {appointment.coachPhoneNumber}
                         </div>
                     </div>
                 ))}
