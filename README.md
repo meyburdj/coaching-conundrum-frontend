@@ -1,2 +1,2 @@
 ## Component Tree
- ![Component Tree](public/component_tree.svg)
+ ![Component Tree](public/component_tree.drawio.svg)
