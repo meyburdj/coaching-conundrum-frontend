@@ -7,11 +7,10 @@ export interface User {
 
 export interface Appointment {
     id: number
-    date: string
-    time: string
+    start_time: string;
     coachId: number
     studentId?: number
-    coachName: string
+    coach_name: string
     coachPhoneNumber?: string
 }
 
@@ -22,6 +21,6 @@ export interface AppointmentReview {
     notes: string
 }
 
-export interface AvailableAppointment extends Pick<Appointment, 'id' | 'date' | 'time' | 'coachName'> { }
+export interface AvailableAppointment extends Pick<Appointment, 'id' | 'start_time' | 'coach_name'> { }
 
-export interface UpcomingAppointment extends Pick<Appointment, 'id' | 'date' | 'time' | 'coachPhoneNumber'> { }
+export interface UpcomingAppointment extends Pick<Appointment, 'id' | 'start_time' | 'coachPhoneNumber'> { }
