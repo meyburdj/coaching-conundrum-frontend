@@ -6,18 +6,18 @@ import { UpcomingAppointments } from "./BookedAppointments"
 import { UpcomingAppointment, AvailableAppointment } from "@/types"
 import { formatDate } from "@/lib/helpers"
 import { fetchAvailableAppointmentsFromClient } from "@/lib/apiClient"
+import { bookAppointmentFromClient } from "@/lib/apiClient"
 
-export function StudentDashboard({ initialAvailableAppointments }:
-    { initialAvailableAppointments: AvailableAppointment[] }
+export function StudentDashboard({ initialAvailableAppointments, initialBookedAppointments, studentId }:
+    {
+        initialAvailableAppointments: AvailableAppointment[],
+        initialBookedAppointments: UpcomingAppointment[],
+        studentId: number
+    }
 ) {
     const [date, setDate] = useState<Date | undefined>()
     const [availableAppointments, setAvailableAppointments] = useState<AvailableAppointment[]>(initialAvailableAppointments)
-
-    const upcomingAppointments: UpcomingAppointment[] = [
-        { id: 4, date: "April 12, 2023", time: "3:00 PM - 4:00 PM", coachPhoneNumber: "123-456-7890" },
-        { id: 5, date: "April 14, 2023", time: "11:00 AM - 12:00 PM", coachPhoneNumber: "234-567-8901" },
-        { id: 6, date: "April 18, 2023", time: "2:00 PM - 3:00 PM", coachPhoneNumber: "345-678-9012" },
-    ]
+    const [bookedAppointments, setBookedAppointments] = useState<UpcomingAppointment[]>(initialBookedAppointments)
 
     /**Take availableAppointments and find all unique dates so that map can 
      * signify days with available appointments**/
@@ -63,6 +63,21 @@ export function StudentDashboard({ initialAvailableAppointments }:
     }
     const filteredAppointments = filterAppointmentsByDate(availableAppointments, date);
 
+    const handleBook = async (appointmentId: number, studentId: number) => {
+        try {
+            const bookedAppointment = await bookAppointmentFromClient(appointmentId, studentId);
+            setAvailableAppointments(prevAppointments =>
+                prevAppointments.filter(appointment => appointment.id !== appointmentId)
+            );
+            setBookedAppointments(prevBookedAppointments => {
+                //TODO: could do via finding target with binary search and splicing in new bookedAppointment
+                const newBookedAppointments = [...prevBookedAppointments, bookedAppointment];
+                return newBookedAppointments.sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime());
+            });
+        } catch (error) {
+            console.error("Failed to book appointment:", error);
+        }
+    };
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 md:p-10">
@@ -77,10 +92,10 @@ export function StudentDashboard({ initialAvailableAppointments }:
                 />
             </div>
             <div className="md:col-span-1 h-full">
-                <AvailableAppointments appointments={filteredAppointments} />
+                <AvailableAppointments appointments={filteredAppointments} studentId={studentId} handleBook={handleBook} />
             </div>
             <div className="md:col-span-1 h-full">
-                <UpcomingAppointments appointments={upcomingAppointments} />
+                <UpcomingAppointments appointments={bookedAppointments} />
             </div>
         </div>
     )
