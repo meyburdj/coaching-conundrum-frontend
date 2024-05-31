@@ -9,6 +9,6 @@ export default async function Dashboard({ params }: { params: { userId: string }
     const availableAppointments: AvailableAppointment[] = await fetchAvailableAppointments(formatDate(new Date()), true);
     console.log("availableAppointments", availableAppointments)
     return (
-        <StudentDashboard availableAppointments={availableAppointments} />
+        <StudentDashboard initialAvailableAppointments={availableAppointments} />
     );
 }
