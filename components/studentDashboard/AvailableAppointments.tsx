@@ -1,13 +1,19 @@
+"use client"
+
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { AvailableAppointment } from "@/types"
 import { formatDateTime } from "@/lib/helpers"
 
+
 interface AvailableAppointmentsProps {
-    appointments: AvailableAppointment[]
+    appointments: AvailableAppointment[],
+    studentId: number,
+    handleBook: (appointmentId: number, studentId: number) => void
 }
 
-export function AvailableAppointments({ appointments }: AvailableAppointmentsProps) {
+export function AvailableAppointments({ appointments, studentId, handleBook }: AvailableAppointmentsProps) {
+
     return (
         <Card className="h-full max-h-[70vh] overflow-y-auto shadow-md">
             <CardHeader>
@@ -24,7 +30,9 @@ export function AvailableAppointments({ appointments }: AvailableAppointmentsPro
                                     <div className="text-gray-500 dark:text-gray-400">{startTime} - {endTime}</div>
                                     <div className="text-gray-500 dark:text-gray-400">Coach: {appointment.coach_name}</div>
                                 </div>
-                                <Button size="sm">Book</Button>
+                                <Button onClick={() => handleBook(appointment.id, studentId)}>
+                                    Book
+                                </Button>
                             </div>
                         );
                     })}
