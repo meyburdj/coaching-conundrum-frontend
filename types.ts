@@ -11,7 +11,7 @@ export interface Appointment {
     coachId: number
     studentId?: number
     coach_name: string
-    coachPhoneNumber?: string
+    phone_number?: string
 }
 
 export interface AppointmentReview {
@@ -23,4 +23,4 @@ export interface AppointmentReview {
 
 export interface AvailableAppointment extends Pick<Appointment, 'id' | 'start_time' | 'coach_name'> { }
 
-export interface UpcomingAppointment extends Pick<Appointment, 'id' | 'start_time' | 'coachPhoneNumber'> { }
+export interface UpcomingAppointment extends Pick<Appointment, 'id' | 'start_time' | 'phone_number' | 'coach_name'> { }
