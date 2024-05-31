@@ -7,7 +7,8 @@ import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
-  highlightDates?: Date[]
+  highlightDates?: Date[],
+  onMonthChange?: (date: Date) => void
 }
 
 function Calendar({
@@ -15,6 +16,7 @@ function Calendar({
   classNames,
   showOutsideDays = true,
   highlightDates = [],
+  onMonthChange,
   ...props
 }: CalendarProps) {
   const selectedDayStyles = "bg-gray-900 text-gray-50 hover:bg-gray-900 hover:text-gray-50 focus:bg-gray-900 focus:text-gray-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50 dark:hover:text-gray-900 dark:focus:bg-gray-50 dark:focus:text-gray-900"
@@ -51,7 +53,12 @@ function Calendar({
 
   return (
     <DayPicker
-      showOutsideDays={showOutsideDays}
+      /**FIXME: Currently IconLeft and IconRight do a default behavior and then 
+       * do the onMonthChange. Should do just onMonthChange which controls all of the 
+       * props such as month. Potential solutions are search the DayPicker api
+       * or disable navigation and place own icons in same place that are fully
+       * under our control*/
+      // disableNavigation={true}
       className={cn("p-3", className)}
       classNames={{ ...customClassNames, ...classNames }}
       modifiers={{
@@ -60,8 +67,11 @@ function Calendar({
       modifiersClassNames={{
         highlight: highlightedDayStyles,
       }}
+      onMonthChange={(month) => {
+        if (onMonthChange) onMonthChange(month);
+      }}
       components={{
-        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
+        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" onClick={() => console.log('hello')} />,
         IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
       }}
       {...props}
