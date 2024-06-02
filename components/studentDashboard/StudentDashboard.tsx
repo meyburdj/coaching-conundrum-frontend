@@ -7,6 +7,7 @@ import { UpcomingAppointment, AvailableAppointment } from "@/types"
 import { formatDate } from "@/lib/helpers"
 import { fetchAvailableAppointmentsFromClient } from "@/lib/apiClient"
 import { bookAppointmentFromClient } from "@/lib/apiClient"
+import { Card } from "../ui/card"
 
 export function StudentDashboard({ initialAvailableAppointments, initialBookedAppointments, studentId }:
     {
@@ -80,16 +81,18 @@ export function StudentDashboard({ initialAvailableAppointments, initialBookedAp
     };
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 md:p-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 md:p-10 ">
             <div className="md:col-span-1 ">
-                <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={setDate}
-                    className="rounded-md border"
-                    highlightDates={highlightDates}
-                    onMonthChange={handleMonthChange}
-                />
+                <Card className="h-full max-h-[70vh] overflow-y-auto shadow-md">
+                    <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        className="rounded-md "
+                        highlightDates={highlightDates}
+                        onMonthChange={handleMonthChange}
+                    />
+                </Card>
             </div>
             <div className="md:col-span-1 h-full">
                 <AvailableAppointments appointments={filteredAppointments} studentId={studentId} handleBook={handleBook} />
