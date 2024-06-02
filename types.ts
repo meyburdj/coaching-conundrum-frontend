@@ -21,6 +21,13 @@ export interface AppointmentReview {
     notes: string
 }
 
+export interface User {
+    id: number;
+    name: string;
+    phone_number: string;
+    role: 'student' | 'coach';
+}
+
 export interface AvailableAppointment extends Pick<Appointment, 'id' | 'start_time' | 'coach_name'> { }
 
 export interface UpcomingAppointment extends Pick<Appointment, 'id' | 'start_time' | 'phone_number' | 'coach_name'> { }
