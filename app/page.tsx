@@ -1,8 +1,15 @@
-import Image from "next/image";
-import { StudentDashboard } from "@/components/studentDashboard/StudentDashboard";
+import { fetchUsersFromServer } from "@/lib/api";
+import MockLogin from "@/components/MockLogin";
 
-export default function Home() {
+export default async function Home() {
+  const users = await fetchUsersFromServer();
+
+  const students = users.filter((user) => user.role === "student");
+  // console.log('students', students)
+  const coaches = users.filter((user) => user.role === "coach");
+
+
   return (
-    <StudentDashboard />
+    <MockLogin students={students} coaches={coaches} />
   );
 }
