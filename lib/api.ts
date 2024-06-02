@@ -1,4 +1,4 @@
-import { AvailableAppointment, UpcomingAppointment } from "@/types";
+import { AvailableAppointment, UpcomingAppointment, User } from "@/types";
 
 export async function fetchAvailableAppointments(selectedTime?: string, available?: boolean): Promise<AvailableAppointment[]> {
     const queryParams = new URLSearchParams();
@@ -35,3 +35,28 @@ export async function bookAppointmentFromServer(appointmentId: number, studentId
 
     return response.json();
 }
+
+export async function createUserFromServer(name: string, phone_number: string, role: string): Promise<User> {
+    const response = await fetch(`${process.env.BACKEND_API_URL}/users`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, phone_number, role }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to create user');
+    }
+
+    return response.json();
+}
+
+export async function fetchUsersFromServer(): Promise<User[]> {
+    const response = await fetch(`${process.env.BACKEND_API_URL}/users`, { next: { revalidate: 0 } });
+    if (!response.ok) {
+        throw new Error("Failed to fetch upcoming appointments");
+    }
+    return response.json();
+}
+
