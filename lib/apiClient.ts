@@ -10,7 +10,6 @@ export async function fetchAvailableAppointmentsFromClient(selected_time: string
 }
 
 export async function bookAppointmentFromClient(appointmentId: number, studentId: number): Promise<AvailableAppointment> {
-    console.log('params from clien api', studentId, appointmentId)
     const response = await fetch(`/api/bookappointment`, {
         method: 'PATCH',
         headers: {
