@@ -27,8 +27,8 @@ export function AvailableAppointments({ appointments, studentId, handleBook }: A
                             <div key={appointment.id} className="flex items-center justify-between">
                                 <div>
                                     <div className="font-medium">{date}</div>
-                                    <div className="text-gray-500 dark:text-gray-400">{startTime} - {endTime}</div>
-                                    <div className="text-gray-500 dark:text-gray-400">Coach: {appointment.coach_name}</div>
+                                    <div className="text-gray-500">{startTime} - {endTime}</div>
+                                    <div className="text-gray-500">Coach: {appointment.coach_name}</div>
                                 </div>
                                 <Button onClick={() => handleBook(appointment.id, studentId)}>
                                     Book
