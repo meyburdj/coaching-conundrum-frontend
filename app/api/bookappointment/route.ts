@@ -4,7 +4,6 @@ import { bookAppointmentFromServer } from '@/lib/api';
 export async function PATCH(request: NextRequest) {
     try {
         const { appointmentId, student_id } = await request.json();
-        console.log('appointmentId, student_id', appointmentId, student_id)
         const appointment = await bookAppointmentFromServer(appointmentId, student_id);
         return NextResponse.json(appointment, { status: 200 });
     } catch (error) {
