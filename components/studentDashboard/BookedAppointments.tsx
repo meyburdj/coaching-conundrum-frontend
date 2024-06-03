@@ -21,10 +21,10 @@ export function UpcomingAppointments({ appointments }: UpcomingAppointmentsProps
                         <div key={appointment.id} className="flex items-center justify-between">
                             <div>
                                 <div className="font-medium">{date}</div>
-                                <div className="text-gray-500 dark:text-gray-400">{startTime} - {endTime}</div>
-                                <div className="text-gray-500 dark:text-gray-400">Coach {appointment.coach_name}</div>
+                                <div className="text-gray-500">{startTime} - {endTime}</div>
+                                <div className="text-gray-500">Coach {appointment.coach_name}</div>
                             </div>
-                            <div className="px-2 py-1 rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-200 font-medium text-sm">
+                            <div className="px-2 py-1 rounded-full bg-blue-100 text-blue-600 font-medium text-sm">
                                 phone # {appointment.phone_number}
                             </div>
                         </div>
