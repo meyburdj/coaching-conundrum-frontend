@@ -49,12 +49,14 @@ export default function MockLogin({ students, coaches }: MockLoginProps) {
         },
     });
 
-    const handleSelectUser = () => {
-        router.push(`/users/${userIdState}/dashboard`);
+    const handleSelectStudent = () => {
+        router.push(`/users/${userIdState}/dashboard?role=student`);
+    };
+    const handleSelectCoach = () => {
+        router.push(`/users/${userIdState}/dashboard?role=coach`);
     };
 
     const onSubmit: SubmitHandler<UserForm> = async (data) => {
-        console.log('data', data);
         const response = await fetch("/api/users", {
             method: "POST",
             headers: {
@@ -64,7 +66,9 @@ export default function MockLogin({ students, coaches }: MockLoginProps) {
         });
 
         const newUser = await response.json();
-        router.push(`/users/${newUser.id}/dashboard`);
+        (data.role === 'coach' ?
+            router.push(`/users/${newUser.id}/dashboard?role=coach`) :
+            router.push(`/users/${newUser.id}/dashboard?role=student`))
     };
 
     return (
@@ -96,7 +100,7 @@ export default function MockLogin({ students, coaches }: MockLoginProps) {
                         </div>
                     </CardContent>
                     <CardFooter className="flex justify-center">
-                        <Button onClick={handleSelectUser}>Continue</Button>
+                        <Button onClick={handleSelectStudent}>Continue</Button>
                     </CardFooter>
                 </Card>
             </div>
@@ -127,7 +131,7 @@ export default function MockLogin({ students, coaches }: MockLoginProps) {
                         </div>
                     </CardContent>
                     <CardFooter className="flex justify-center">
-                        <Button onClick={handleSelectUser}>Continue</Button>
+                        <Button onClick={handleSelectCoach}>Continue</Button>
                     </CardFooter>
                 </Card>
             </div>
