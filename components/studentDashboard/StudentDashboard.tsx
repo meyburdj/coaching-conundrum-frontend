@@ -8,6 +8,7 @@ import { formatDate } from "@/lib/helpers"
 import { fetchAvailableAppointmentsFromClient } from "@/lib/apiClient"
 import { bookAppointmentFromClient } from "@/lib/apiClient"
 import { Card } from "../ui/card"
+import { toast } from "@/components/ui/use-toast";
 
 export function StudentDashboard({ initialAvailableAppointments, initialBookedAppointments, studentId }:
     {
@@ -67,6 +68,12 @@ export function StudentDashboard({ initialAvailableAppointments, initialBookedAp
     const handleBook = async (appointmentId: number, studentId: number) => {
         try {
             const bookedAppointment = await bookAppointmentFromClient(appointmentId, studentId);
+            if (bookedAppointment) {
+                toast({
+                    title: "Appointment Booked",
+                    description: "Your appointment has been successfully booked.",
+                });
+            }
             setAvailableAppointments(prevAppointments =>
                 prevAppointments.filter(appointment => appointment.id !== appointmentId)
             );
